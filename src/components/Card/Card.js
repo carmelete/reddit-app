@@ -5,11 +5,11 @@ export function Card () {
         <article className="flex justify-between mx-4 my-4 border border-gray-200 rounded-md shadow-lg w-12/12">
                 <section className="flex flex-col items-center w-1/12 mt-4">
                     <button type="button">
-                        <i class="bi bi-file-arrow-up text-3xl text-gray-600 hover:text-green-400 active:text-green-600"></i>
+                        <i className="text-3xl text-gray-600 bi bi-file-arrow-up hover:text-green-400 active:text-green-600"></i>
                     </button>
                     <p className="mt-4 mb-2 text-sm font-bold text-gray-600">35.8</p>
                     <button type="button">
-                        <i class="bi bi-file-arrow-down text-3xl text-gray-600 hover:text-red-400 active:text-red-600"></i>
+                        <i className="text-3xl text-gray-600 bi bi-file-arrow-down hover:text-red-400 active:text-red-600"></i>
                     </button>
                 </section>
                 <section className="flex flex-col w-11/12 mt-4 mr-4">
@@ -32,3 +32,5 @@ export function Card () {
         </article>
     )
 }
+
+export default Card;
