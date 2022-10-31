@@ -10,12 +10,11 @@ import { fetchPosts } from './features/reddit/redditSlice';
 function App() {
   const dispatch = useDispatch();
   const reddit = useSelector((state) => state.reddit);
+  const { isLoading, error, searchTerm, selectedSubreddit } = reddit;
 
   useEffect(() => {
-    dispatch(fetchPosts('AskReddit'))
+    dispatch(fetchPosts('pics'))
   }, []);
-
-  console.log(reddit.posts);
 
   return (
     <div className="App">
@@ -23,7 +22,13 @@ function App() {
       <div className="flex">
         <main className="w-9/12">
           {
-            reddit.posts.map((post) => <Card />)
+            reddit.posts.map((post) =>
+              <Card
+                key={post.id}
+                post={post}
+
+              />
+            )
           }
         </main>
         <aside className="w-3/12">
