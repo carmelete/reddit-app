@@ -5,15 +5,18 @@ import { Subreddits } from './components/Subreddits/Subreddits';
 import './App.css';
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPosts } from './features/reddit/redditSlice';
+import { fetchSubredditList, selectSubreddits } from './features/reddit/subRedditSlice';
 
 
 function App() {
   const dispatch = useDispatch();
+
   const reddit = useSelector((state) => state.reddit);
   const { isLoading, error, searchTerm, selectedSubreddit } = reddit;
 
   useEffect(() => {
-    dispatch(fetchPosts('pics'))
+    dispatch(fetchPosts('pics'));
+    dispatch(fetchSubredditList());
   }, []);
 
   return (
@@ -32,7 +35,8 @@ function App() {
           }
         </main>
         <aside className="w-3/12">
-          <Subreddits />
+          <Subreddits
+          />
         </aside>
       </div>
     </div>
