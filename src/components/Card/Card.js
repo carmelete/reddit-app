@@ -12,7 +12,7 @@ export function Card (props) {
     )
 
     return (
-        <article className="flex justify-between mx-4 my-4 border border-gray-200 rounded-md shadow-lg w-12/12 min-h-[10rem]">
+        <article className="flex justify-between mx-4 my-4 border-2 border-white rounded-md shadow-lg w-12/12 min-h-[10rem]">
                 <section className="flex flex-col items-center w-1/12 mt-4">
                     <button type="button">
                         <i className="text-3xl text-gray-600 bi bi-file-arrow-up hover:text-green-400 active:text-green-600"></i>
