@@ -1,13 +1,14 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectSubreddits } from "../../features/reddit/subRedditSlice";
-import { selectSelectedSubreddit, setSelectedSubreddit } from "../../features/reddit/redditSlice";
+import { setSelectedSubreddit, selectSelectedSubreddit } from "../../features/reddit/redditSlice";
 
 export function Subreddits() {
     const dispatch = useDispatch();
 
     const subreddits = useSelector(selectSubreddits);
-    const selectedSubreddits = useSelector(selectSelectedSubreddit);
+
+    const selectedSubreddit = useSelector(selectSelectedSubreddit);
 
     return (
         <article className="flex flex-col p-5 mt-4 mr-4 text-left border-2 border-white rounded-md shadow-2xl h-12/12">
@@ -16,10 +17,10 @@ export function Subreddits() {
                 {subreddits.map((subreddit) => (
                     <li
                         key={subreddit.id}
-                        className="flex items-center text-sm font-bold text-left text-gray-500 border-l-4 border-transparent h-14 hover:bg-gray-100 active:bg-blue-100 active:border-l-4 active:border-l-blue-700 active:text-blue-700 hover:cursor-pointer"
+                        className={`flex items-center text-sm font-bold text-left text-gray-500 border-l-4 border-transparent h-14 hover:bg-gray-100 hover:cursor-pointer ${selectedSubreddit === subreddit.url ? "bg-blue-100 border-l-4 border-l-blue-700 text-blue-700 hover:bg-blue-200" : ""}`}
                         onClick={() => dispatch(setSelectedSubreddit(subreddit.url))}
                     >
-                        <div className="flex items-center w-full p-2 ">
+                        <div className="flex items-center w-full p-2">
                             <img
                                 src={subreddit.icon_img || `https://api.adorable.io/avatars/25/${subreddit.display_name}`}
                                 alt={`${subreddit.display_name}`}
