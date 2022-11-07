@@ -1,9 +1,13 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { selectSubreddits } from "../../features/reddit/subRedditSlice";
+import { selectSelectedSubreddit, setSelectedSubreddit } from "../../features/reddit/redditSlice";
 
 export function Subreddits() {
-    const subreddits = useSelector((state) => state.subreddits.subreddits);
-    console.log(subreddits);
+    const dispatch = useDispatch();
+
+    const subreddits = useSelector(selectSubreddits);
+    const selectedSubreddits = useSelector(selectSelectedSubreddit);
 
     return (
         <article className="flex flex-col p-5 mt-4 mr-4 text-left border-2 border-white rounded-md shadow-2xl h-12/12">
@@ -13,6 +17,7 @@ export function Subreddits() {
                     <li
                         key={subreddit.id}
                         className="flex items-center text-sm font-bold text-left text-gray-500 border-l-4 border-transparent h-14 hover:bg-gray-100 active:bg-blue-100 active:border-l-4 active:border-l-blue-700 active:text-blue-700 hover:cursor-pointer"
+                        onClick={() => dispatch(setSelectedSubreddit(subreddit.url))}
                     >
                         <div className="flex items-center w-full p-2 ">
                             <img

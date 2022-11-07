@@ -5,7 +5,7 @@ import { Subreddits } from './components/Subreddits/Subreddits';
 import './App.css';
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPosts, selectFilteredPosts, setSearchTerm } from './features/reddit/redditSlice';
-import { fetchSubredditList, selectSubreddits } from './features/reddit/subRedditSlice';
+import { fetchSubredditList } from './features/reddit/subRedditSlice';
 
 
 function App() {
@@ -17,9 +17,13 @@ function App() {
   const posts = useSelector(selectFilteredPosts);
 
   useEffect(() => {
-    dispatch(fetchPosts('pics'));
+    dispatch(fetchPosts('/r/pics/'));
     dispatch(fetchSubredditList());
-  }, [dispatch]);
+  }, []);
+
+  useEffect(() => {
+    dispatch(fetchPosts(selectedSubreddit));
+  }, [selectedSubreddit])
 
   const noPostMatching = () => {
     return (
