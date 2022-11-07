@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { formatDistance, fromUnixTime } from 'date-fns';
 
 export function Card (props) {
@@ -15,15 +15,47 @@ export function Card (props) {
         return Math.abs(num) > 999 ? Math.sign(num)*((Math.abs(num)/1000).toFixed(1)) + 'k' : Math.sign(num)*Math.abs(num)
     }
 
+    const [voteValue, setVoteValue] = useState(0);
+
+    const onHandleVote = (newValue) => {
+        if(newValue === voteValue) {
+            setVoteValue(0);
+        } else if(newValue === 1) {
+            setVoteValue(1);
+        } else {
+            setVoteValue(-1);
+        }
+    };
+
+    const renderUpVote = () => {
+        if(voteValue === 1) {
+            return <i className="text-3xl text-green-500 bi bi-file-arrow-up"></i>
+        }
+        return <i className="text-3xl text-gray-600 bi bi-file-arrow-up hover:text-green-400"></i>
+    };
+
+    const renderDownVote = () => {
+        if(voteValue === -1) {
+            return <i className="text-3xl text-red-600 bi bi-file-arrow-down"></i>
+        }
+        return <i className="text-3xl text-gray-600 bi bi-file-arrow-down hover:text-red-400"></i>
+    };
+
     return (
         <article className="flex justify-between mx-4 my-4 border-2 border-white rounded-md shadow-lg w-12/12 min-h-[10rem]">
                 <section className="flex flex-col items-center w-1/12 mt-4">
-                    <button type="button">
-                        <i className="text-3xl text-gray-600 bi bi-file-arrow-up hover:text-green-400 active:text-green-600"></i>
+                    <button
+                        type="button"
+                        onClick={() => onHandleVote(1)}
+                    >
+                        {renderUpVote()}
                     </button>
-                    <p className="mt-4 mb-2 text-sm font-bold text-gray-600">{kFormatter(props.post.score)}</p>
-                    <button type="button">
-                        <i className="text-3xl text-gray-600 bi bi-file-arrow-down hover:text-red-400 active:text-red-600"></i>
+                    <p className={`mt-4 mb-2 text-sm font-bold text-gray-600 ${voteValue === 1 ? "text-green-500" : ""} ${voteValue === -1 ? "text-red-600" : ""}`}>{kFormatter(props.post.score)}</p>
+                    <button
+                        type="button"
+                        onClick={() => onHandleVote(-1)}
+                    >
+                        {renderDownVote()}
                     </button>
                 </section>
                 <section className="flex flex-col w-11/12 mt-4 mr-4">
