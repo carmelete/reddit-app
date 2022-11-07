@@ -64,6 +64,7 @@ export const selectFilteredPosts = createSelector(
         post.title.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
-  return posts;
+
+    return posts;
   }
 );

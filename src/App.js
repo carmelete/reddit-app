@@ -25,7 +25,7 @@ function App() {
     dispatch(fetchPosts(selectedSubreddit));
   }, [selectedSubreddit])
 
-  const noPostMatching = () => {
+  if (posts.length === 0) {
     return (
       <div className="flex flex-col items-center mt-8">
         <h2 className="mb-4 text-2xl font-bold text-center text-gray-500">
@@ -33,8 +33,8 @@ function App() {
         </h2>
         <button
           type="button"
-          onClick={() => dispatch(setSearchTerm(''))}
           className="w-32 h-12 text-white bg-orange-400 rounded-md"
+          onClick={() => dispatch(setSearchTerm(''))}
         >
           Go home
         </button>
@@ -42,22 +42,17 @@ function App() {
     );
   }
 
-
   return (
     <div className="App">
       <Header />
       <div className="flex">
         <main className="w-9/12">
-          {posts.length > 0 &&
-            reddit.posts.map((post) => (
+          {posts.map((post) => (
               <Card
                 key={post.id}
                 post={post}
               />
             ))
-          }
-          {!posts.length &&
-            noPostMatching()
           }
         </main>
         <aside className="w-3/12">

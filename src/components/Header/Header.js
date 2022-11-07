@@ -13,14 +13,14 @@ export function Header() {
     setSearchTermLocal(e.target.value);
   };
 
+  useEffect(() => {
+    setSearchTermLocal(searchTerm);
+  }, [searchTerm]);
+
   const onSearchTermSubmit = (e) => {
     e.preventDefault();
     dispatch(setSearchTerm(searchTermlocal));
   };
-
-  useEffect(() => {
-    setSearchTermLocal(searchTerm);
-  }, [searchTerm]);
 
   return (
     <div className="flex h-16 shadow-lg">
@@ -52,5 +52,3 @@ export function Header() {
     </div>
   );
 }
-
-export default Header;
