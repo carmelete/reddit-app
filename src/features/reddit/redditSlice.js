@@ -31,17 +31,20 @@ export const redditSlice = createSlice({
     setSearchTerm(state, action) {
       state.searchTerm = action.payload;
     },
+    setSelectedSubreddit(state, action) {
+      state.selectedSubreddit = action.payload;
+    },
   },
 });
 
-export const { setPosts, getPosts, getPostsSuccess, getPostsFailed, setSearchTerm } = redditSlice.actions;
+export const { setPosts, getPosts, getPostsSuccess, getPostsFailed, setSearchTerm, setSelectedSubreddit } = redditSlice.actions;
 
 export default redditSlice.reducer;
 
 export const fetchPosts = (subreddit) => async (dispatch)  => {
   try {
     dispatch(getPosts());
-    const posts = await getSubredditPosts(`/r/${subreddit}`);
+    const posts = await getSubredditPosts(`${subreddit}`);
     dispatch(getPostsSuccess(posts));
   } catch (error) {
     dispatch(getPostsFailed());
@@ -50,6 +53,8 @@ export const fetchPosts = (subreddit) => async (dispatch)  => {
 
 const selectPosts = (state) => state.reddit.posts;
 const selectSearchTerm = (state) => state.reddit.searchTerm;
+export const selectSelectedSubreddit = (state) => state.reddit.selectedSubreddit;
+
 
 export const selectFilteredPosts = createSelector(
   [selectPosts, selectSearchTerm],
