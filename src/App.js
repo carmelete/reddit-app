@@ -59,6 +59,23 @@ function App() {
     </div>
   }
 
+  if (posts.length === 0) {
+    return (
+      <div className="flex flex-col items-center mt-8">
+        <h2 className="mb-4 text-2xl font-bold text-center text-gray-500">
+          No posts matching "{searchTerm}"
+        </h2>
+        <button
+          type="button"
+          className="w-32 h-12 text-white bg-orange-400 rounded-md"
+          onClick={() => dispatch(setSearchTerm(''))}
+        >
+          Go home
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="App">
       <Header />
