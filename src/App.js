@@ -4,7 +4,7 @@ import { Card } from './components/Card/Card';
 import { Subreddits } from './components/Subreddits/Subreddits';
 import './App.css';
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPosts, selectFilteredPosts, setSearchTerm } from './features/reddit/redditSlice';
+import { fetchComments, fetchPosts, selectFilteredPosts, setSearchTerm } from './features/reddit/redditSlice';
 import { fetchSubredditList } from './features/reddit/subRedditSlice';
 
 
@@ -23,7 +23,15 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchPosts(selectedSubreddit));
-  }, [selectedSubreddit])
+  }, [selectedSubreddit]);
+
+  const onToggleComments = (index) => {
+    const getComments = (permalink) => {
+      dispatch(fetchComments(index, permalink));
+    };
+
+    return getComments;
+  }
 
   if (posts.length === 0) {
     return (
@@ -42,18 +50,32 @@ function App() {
     );
   }
 
+  if(error) {
+    <div className="flex flex-col items-center justify-center">
+      <h2>
+        Failed to load posts.
+      </h2>
+      <button
+        type="button"
+        onClick={() => dispatch(fetchPosts(selectedSubreddit))}
+      >
+        Try again
+      </button>
+    </div>
+  }
+
   return (
     <div className="App">
       <Header />
       <div className="flex">
         <main className="w-9/12">
-          {posts.map((post) => (
+          {posts.map((post, index) => (
               <Card
                 key={post.id}
                 post={post}
+                onToggleComments={onToggleComments(index)}
               />
-            ))
-          }
+            ))}
         </main>
         <aside className="w-3/12">
           <Subreddits
