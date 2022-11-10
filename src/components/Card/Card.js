@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { formatDistance, fromUnixTime } from 'date-fns';
+import { Comment } from '../Comments/Comments';
 
 export function Card (props) {
     const getTimeAgo = formatDistance(
@@ -16,6 +17,8 @@ export function Card (props) {
     }
 
     const [voteValue, setVoteValue] = useState(0);
+
+    const { post, onToggleComments } = props;
 
     const onHandleVote = (newValue) => {
         if(newValue === voteValue) {
@@ -40,6 +43,38 @@ export function Card (props) {
         }
         return <i className="text-3xl text-gray-600 bi bi-file-arrow-down hover:text-red-400"></i>
     };
+
+    const renderComments = () => {
+        if(post.errorComments) {
+            return (
+                <div>
+                    <h3>Error loading comments</h3>
+                </div>
+            );
+        }
+
+        if(post.loadingComments) {
+            return (
+                <div>
+
+                </div>
+            );
+        }
+        if(post.showingComments) {
+            return (
+                <div>
+                    {post.comments.map((comment) => (
+                        <Comment
+                            comment={comment}
+                            key={comment.id}
+                        />
+                    ))}
+                </div>
+            );
+        }
+
+        return null;
+    }
 
     return (
         <article className="flex justify-between mx-4 my-4 border-2 border-white rounded-md shadow-lg w-12/12 min-h-[10rem]">
@@ -68,12 +103,17 @@ export function Card (props) {
                         <span className="text-xs">Posted by <span className="font-bold text-blue-700">{props.post.author}</span></span>
                         <span className="text-xs">{getTimeAgo}</span>
                         <span className="flex items-center" >
-                            <button type="button" className="w-8 hover:bg-gray-100">
+                            <button
+                                type="button"
+                                className={`w-8 hover:bg-gray-100 ${props.post.showingComments && ""}`}
+                                onClick={() => onToggleComments(props.post.permalink)}
+                            >
                                 <i className="text-xl bi bi-chat-left"></i>
                             </button>
-                            <p className="ml-2 text-xs" >{props.post.num_comments}</p>
+                            <p className="ml-2 text-xs" >{kFormatter(props.post.num_comments)}</p>
                         </span>
                     </footer>
+                    {renderComments()}
                 </section>
         </article>
     )
