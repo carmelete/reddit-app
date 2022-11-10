@@ -6,6 +6,7 @@ import './App.css';
 import { useDispatch, useSelector } from "react-redux";
 import { fetchComments, fetchPosts, selectFilteredPosts, setSearchTerm } from './features/reddit/redditSlice';
 import { fetchSubredditList } from './features/reddit/subRedditSlice';
+import { ColorRing } from 'react-loader-spinner';
 
 
 function App() {
@@ -33,21 +34,15 @@ function App() {
     return getComments;
   }
 
-  if (posts.length === 0) {
+  if(isLoading) {
     return (
-      <div className="flex flex-col items-center mt-8">
-        <h2 className="mb-4 text-2xl font-bold text-center text-gray-500">
-          No posts matching "{searchTerm}"
-        </h2>
-        <button
-          type="button"
-          className="w-32 h-12 text-white bg-orange-400 rounded-md"
-          onClick={() => dispatch(setSearchTerm(''))}
-        >
-          Go home
-        </button>
+      <div className="flex items-center justify-center pt-12">
+        <ColorRing
+          height="150"
+          width="150"
+        />
       </div>
-    );
+    )
   }
 
   if(error) {
