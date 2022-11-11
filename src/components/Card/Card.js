@@ -87,9 +87,8 @@ export function Card (props) {
                     </button>
                     <p className=
                     {
-                        `mt-4 mb-2 text-sm font-bold text-gray-600
-                        ${voteValue === 1 && "text-green-600"}
-                        ${voteValue === -1 && "text-red-600"}`
+                        `mt-4 mb-2 text-sm font-bold
+                        ${voteValue > 0 ? "text-green-600" : voteValue === -1 ? "text-red-600" : "text-gray-600"}`
                     }
                     >
                         {kFormatter(props.post.score)}
