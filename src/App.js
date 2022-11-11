@@ -34,7 +34,7 @@ function App() {
     return getComments;
   }
 
-  if(isLoading) {
+  function getLoadder() {
     return (
       <div className="flex items-center justify-center pt-12">
         <ColorRing
@@ -45,21 +45,24 @@ function App() {
     )
   }
 
-  if(error) {
-    <div className="flex flex-col items-center justify-center">
-      <h2>
-        Failed to load posts.
-      </h2>
-      <button
-        type="button"
-        onClick={() => dispatch(fetchPosts(selectedSubreddit))}
-      >
-        Try again
-      </button>
-    </div>
+  function errorLoading() {
+    return (
+      <div className="flex flex-col items-center justify-center">
+        <h2>
+          Failed to load posts.
+        </h2>
+        <button
+          type="button"
+          onClick={() => dispatch(fetchPosts(selectedSubreddit))}
+        >
+          Try again
+        </button>
+      </div>
+    )
+
   }
 
-  if (posts.length === 0) {
+  function noPostsMatching() {
     return (
       <div className="flex flex-col items-center mt-8">
         <h2 className="mb-4 text-2xl font-bold text-center text-gray-500">
@@ -81,7 +84,24 @@ function App() {
       <Header />
       <div className="flex">
         <main className="w-9/12">
-          {posts.map((post, index) => (
+          {isLoading && getLoadder()}
+          {!isLoading && posts.map((post, index) => (
+              <Card
+                key={post.id}
+                post={post}
+                onToggleComments={onToggleComments(index)}
+              />
+            ))}
+          {error && errorLoading()}
+          {!error && posts.map((post, index) => (
+              <Card
+                key={post.id}
+                post={post}
+                onToggleComments={onToggleComments(index)}
+              />
+            ))}
+          {posts.length === 0 ? "" : !isLoading ? "" : noPostsMatching() }
+          {!posts.length === 0 && posts.map((post, index) => (
               <Card
                 key={post.id}
                 post={post}
