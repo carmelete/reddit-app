@@ -19,7 +19,7 @@ export function Comment (props) {
     return (
         <div className="flex flex-col mb-4 bg-gray-100 shadow-sm">
             <div className="flex justify-between py-2 pl-8 pr-4">
-                <p className="font-bold text-blue-700">{comment.author}</p>
+                <p className="font-bold text-orange-500">{comment.author}</p>
                 <p className="italic">
                     {getTimeAgo()}
                 </p>

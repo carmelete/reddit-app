@@ -32,7 +32,7 @@ export function Card (props) {
 
     const renderUpVote = () => {
         if(voteValue === 1) {
-            return <i className="text-3xl text-green-500 bi bi-file-arrow-up"></i>
+            return <i className="text-3xl text-green-600 bi bi-file-arrow-up"></i>
         }
         return <i className="text-3xl text-gray-600 bi bi-file-arrow-up hover:text-green-400"></i>
     };
@@ -85,7 +85,15 @@ export function Card (props) {
                     >
                         {renderUpVote()}
                     </button>
-                    <p className={`mt-4 mb-2 text-sm font-bold text-gray-600 ${voteValue === 1 ? "text-green-500" : ""} ${voteValue === -1 ? "text-red-600" : ""}`}>{kFormatter(props.post.score)}</p>
+                    <p className=
+                    {
+                        `mt-4 mb-2 text-sm font-bold text-gray-600
+                        ${voteValue === 1 && "text-green-600"}
+                        ${voteValue === -1 && "text-red-600"}`
+                    }
+                    >
+                        {kFormatter(props.post.score)}
+                    </p>
                     <button
                         type="button"
                         onClick={() => onHandleVote(-1)}
@@ -100,7 +108,7 @@ export function Card (props) {
                         <hr className="mb-3 decoration-gray"/>
                     </div>
                     <footer className="flex items-center justify-between mb-4">
-                        <span className="text-xs">Posted by <span className="font-bold text-blue-700">{props.post.author}</span></span>
+                        <span className="text-xs">Posted by <span className="font-bold text-orange-500">{props.post.author}</span></span>
                         <span className="text-xs">{getTimeAgo}</span>
                         <span className="flex items-center" >
                             <button
@@ -108,7 +116,7 @@ export function Card (props) {
                                 className={`w-8 hover:bg-gray-100 ${props.post.showingComments && ""}`}
                                 onClick={() => onToggleComments(props.post.permalink)}
                             >
-                                <i className="text-xl bi bi-chat-left"></i>
+                                <i className={`text-xl bi bi-chat-left ${post.showingComments && "text-orange-500"}`}></i>
                             </button>
                             <p className="ml-2 text-xs" >{kFormatter(props.post.num_comments)}</p>
                         </span>
