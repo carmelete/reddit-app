@@ -34,7 +34,7 @@ function App() {
     return getComments;
   }
 
-  function getLoadder() {
+  function getLoader() {
     return (
       <div className="flex items-center justify-center pt-12">
         <ColorRing
@@ -79,35 +79,34 @@ function App() {
     );
   }
 
+  function getPostsOrLoader() {
+    if(isLoading) {
+      return getLoader();
+    }
+
+    if(error) {
+      return errorLoading();
+    }
+
+    if((posts.length === 0) && !isLoading) {
+      return noPostsMatching();
+    }
+
+    return posts.map((post, index) => (
+      <Card
+        key={post.id}
+        post={post}
+        onToggleComments={onToggleComments(index)}
+      />
+    ))
+  }
+
   return (
     <div className="App">
       <Header />
       <div className="flex">
         <main className="w-9/12">
-          {isLoading && getLoadder()}
-          {!isLoading && posts.map((post, index) => (
-              <Card
-                key={post.id}
-                post={post}
-                onToggleComments={onToggleComments(index)}
-              />
-            ))}
-          {error && errorLoading()}
-          {!error && posts.map((post, index) => (
-              <Card
-                key={post.id}
-                post={post}
-                onToggleComments={onToggleComments(index)}
-              />
-            ))}
-          {posts.length === 0 ? "" : !isLoading ? "" : noPostsMatching() }
-          {!posts.length === 0 && posts.map((post, index) => (
-              <Card
-                key={post.id}
-                post={post}
-                onToggleComments={onToggleComments(index)}
-              />
-            ))}
+          {getPostsOrLoader()}
         </main>
         <aside className="w-3/12">
           <Subreddits
