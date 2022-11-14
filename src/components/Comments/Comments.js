@@ -4,7 +4,7 @@ import { formatDistance, fromUnixTime } from 'date-fns';
 export function Comment (props) {
     const { comment } = props;
 
-    const getTimeAgo = () => {
+    const getTimeAgoComments = () => {
         if(comment.created === undefined) return;
 
         return formatDistance(
@@ -21,7 +21,7 @@ export function Comment (props) {
             <div className="flex justify-between py-2 pl-8 pr-4">
                 <p className="font-bold text-orange-500">{comment.author}</p>
                 <p className="italic">
-                    {getTimeAgo()}
+                    {getTimeAgoComments()}
                 </p>
             </div>
             <div className="pb-2">

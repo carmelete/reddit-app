@@ -20,11 +20,11 @@ function App() {
   useEffect(() => {
     dispatch(fetchPosts('/r/pics/'));
     dispatch(fetchSubredditList());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(fetchPosts(selectedSubreddit));
-  }, [selectedSubreddit]);
+  }, [selectedSubreddit, dispatch]);
 
   const onToggleComments = (index) => {
     const getComments = (permalink) => {
